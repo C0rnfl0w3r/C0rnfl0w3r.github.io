@@ -1,38 +1,35 @@
 const btf = {
-  debounce: function (func, wait, immediate) {
+  debounce: (func, wait = 0, immediate = false) => {
     let timeout
-    return function () {
-      const context = this
-      const args = arguments
-      const later = function () {
+    return (...args) => {
+      const later = () => {
         timeout = null
-        if (!immediate) func.apply(context, args)
+        if (!immediate) func(...args)
       }
       const callNow = immediate && !timeout
       clearTimeout(timeout)
       timeout = setTimeout(later, wait)
-      if (callNow) func.apply(context, args)
+      if (callNow) func(...args)
     }
   },
 
-  throttle: function (func, wait, options) {
+  throttle: function (func, wait, options = {}) {
     let timeout, context, args
     let previous = 0
-    if (!options) options = {}
 
-    const later = function () {
+    const later = () => {
       previous = options.leading === false ? 0 : new Date().getTime()
       timeout = null
       func.apply(context, args)
       if (!timeout) context = args = null
     }
 
-    const throttled = function () {
+    const throttled = (...params) => {
       const now = new Date().getTime()
       if (!previous && options.leading === false) previous = now
       const remaining = wait - (now - previous)
       context = this
-      args = arguments
+      args = params
       if (remaining <= 0 || remaining > wait) {
         if (timeout) {
           clearTimeout(timeout)
@@ -58,31 +55,16 @@ const btf = {
     }
   },
 
-  snackbarShow: (text, showAction, duration) => {
-    const sa = (typeof showAction !== 'undefined') ? showAction : false
-    const dur = (typeof duration !== 'undefined') ? duration : 2000
-    const position = GLOBAL_CONFIG.Snackbar.position
-    const bg = document.documentElement.getAttribute('data-theme') === 'light' ? GLOBAL_CONFIG.Snackbar.bgLight : GLOBAL_CONFIG.Snackbar.bgDark
+  snackbarShow: (text, showAction = false, duration = 2000) => {
+    const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar
+    const bg = document.documentElement.getAttribute('data-theme') === 'light' ? bgLight : bgDark
     Snackbar.show({
-      text: text,
+      text,
       backgroundColor: bg,
-      showAction: sa,
-      duration: dur,
-      pos: position
-    })
-  },
-
-  initJustifiedGallery: function (selector) {
-    if (!(selector instanceof jQuery)) {
-      selector = $(selector)
-    }
-    selector.each(function (i, o) {
-      if ($(this).is(':visible')) {
-        $(this).justifiedGallery({
-          rowHeight: 220,
-          margins: 4
-        })
-      }
+      showAction,
+      duration,
+      pos: position,
+      customClass: 'snackbar-css'
     })
   },
 
@@ -94,31 +76,21 @@ const btf = {
     const hour = minute * 60
     const day = hour * 24
     const month = day * 30
+    const { dateSuffix } = GLOBAL_CONFIG
 
-    let result
-    if (more) {
-      const monthCount = dateDiff / month
-      const dayCount = dateDiff / day
-      const hourCount = dateDiff / hour
-      const minuteCount = dateDiff / minute
+    if (!more) return parseInt(dateDiff / day)
 
-      if (monthCount > 12) {
-        result = datePost.toLocaleDateString().replace(/\//g, '-')
-      } else if (monthCount >= 1) {
-        result = parseInt(monthCount) + ' ' + GLOBAL_CONFIG.date_suffix.month
-      } else if (dayCount >= 1) {
-        result = parseInt(dayCount) + ' ' + GLOBAL_CONFIG.date_suffix.day
-      } else if (hourCount >= 1) {
-        result = parseInt(hourCount) + ' ' + GLOBAL_CONFIG.date_suffix.hour
-      } else if (minuteCount >= 1) {
-        result = parseInt(minuteCount) + ' ' + GLOBAL_CONFIG.date_suffix.min
-      } else {
-        result = GLOBAL_CONFIG.date_suffix.just
-      }
-    } else {
-      result = parseInt(dateDiff / day)
-    }
-    return result
+    const monthCount = dateDiff / month
+    const dayCount = dateDiff / day
+    const hourCount = dateDiff / hour
+    const minuteCount = dateDiff / minute
+
+    if (monthCount > 12) return datePost.toISOString().slice(0, 10)
+    if (monthCount >= 1) return `${parseInt(monthCount)} ${dateSuffix.month}`
+    if (dayCount >= 1) return `${parseInt(dayCount)} ${dateSuffix.day}`
+    if (hourCount >= 1) return `${parseInt(hourCount)} ${dateSuffix.hour}`
+    if (minuteCount >= 1) return `${parseInt(minuteCount)} ${dateSuffix.min}`
+    return dateSuffix.just
   },
 
   loadComment: (dom, callback) => {
@@ -135,15 +107,12 @@ const btf = {
     }
   },
 
-  scrollToDest: (pos, time) => {
-    if (pos < 0 || time < 0) {
-      return
-    }
+  scrollToDest: (pos, time = 500) => {
+    const currentPos = window.pageYOffset
+    const isNavFixed = document.getElementById('page-header').classList.contains('fixed')
+    if (currentPos > pos || isNavFixed) pos = pos - 70
 
-    const currentPos = window.scrollY || window.screenTop
-    if (currentPos > pos) pos = pos - 70
-
-    if ('CSS' in window && CSS.supports('scroll-behavior', 'smooth')) {
+    if ('scrollBehavior' in document.documentElement.style) {
       window.scrollTo({
         top: pos,
         behavior: 'smooth'
@@ -152,91 +121,49 @@ const btf = {
     }
 
     let start = null
-    time = time || 500
+    pos = +pos
     window.requestAnimationFrame(function step (currentTime) {
       start = !start ? currentTime : start
+      const progress = currentTime - start
       if (currentPos < pos) {
-        const progress = currentTime - start
         window.scrollTo(0, ((pos - currentPos) * progress / time) + currentPos)
-        if (progress < time) {
-          window.requestAnimationFrame(step)
-        } else {
-          window.scrollTo(0, pos)
-        }
       } else {
-        const progress = currentTime - start
         window.scrollTo(0, currentPos - ((currentPos - pos) * progress / time))
-        if (progress < time) {
-          window.requestAnimationFrame(step)
-        } else {
-          window.scrollTo(0, pos)
-        }
+      }
+      if (progress < time) {
+        window.requestAnimationFrame(step)
+      } else {
+        window.scrollTo(0, pos)
       }
     })
   },
 
-  fadeIn: (ele, time) => {
-    ele.style.cssText = `display:block;animation: to_show ${time}s`
+  animateIn: (ele, text) => {
+    ele.style.display = 'block'
+    ele.style.animation = text
   },
 
-  fadeOut: (ele, time) => {
+  animateOut: (ele, text) => {
     ele.addEventListener('animationend', function f () {
-      ele.style.cssText = "display: none; animation: '' "
+      ele.style.display = ''
+      ele.style.animation = ''
       ele.removeEventListener('animationend', f)
     })
-    ele.style.animation = `to_hide ${time}s`
+    ele.style.animation = text
   },
 
-  getParents: (elem, selector) => {
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.matches(selector)) return elem
+  wrap: (selector, eleType, options) => {
+    const createEle = document.createElement(eleType)
+    for (const [key, value] of Object.entries(options)) {
+      createEle.setAttribute(key, value)
     }
-    return null
+    selector.parentNode.insertBefore(createEle, selector)
+    createEle.appendChild(selector)
   },
 
-  siblings: (ele, selector) => {
-    return [...ele.parentNode.children].filter((child) => {
-      if (selector) {
-        return child !== ele && child.matches(selector)
-      }
-      return child !== ele
-    })
-  },
+  isHidden: ele => ele.offsetHeight === 0 && ele.offsetWidth === 0,
 
-  /**
-   *
-   * @param {*} selector
-   * @param {*} eleType the type of create element
-   * @param {*} id id
-   * @param {*} cn class name
-   */
-  wrap: function (selector, eleType, id = '', cn = '') {
-    const creatEle = document.createElement(eleType)
-    if (id) creatEle.id = id
-    if (cn) creatEle.className = cn
-    selector.parentNode.insertBefore(creatEle, selector)
-    creatEle.appendChild(selector)
-  },
-
-  unwrap: function (el) {
-    const elParentNode = el.parentNode
-    if (elParentNode !== document.body) {
-      elParentNode.parentNode.insertBefore(el, elParentNode)
-      elParentNode.parentNode.removeChild(elParentNode)
-    }
-  },
-
-  isJqueryLoad: (fn) => {
-    if (typeof jQuery === 'undefined') {
-      getScript(GLOBAL_CONFIG.source.jQuery).then(fn)
-    } else {
-      fn()
-    }
-  },
-
-  isHidden: (ele) => ele.offsetHeight === 0 && ele.offsetWidth === 0,
-
-  getEleTop: (ele) => {
+  getEleTop: ele => {
     let actualTop = ele.offsetTop
     let current = ele.offsetParent
 
@@ -246,6 +173,124 @@ const btf = {
     }
 
     return actualTop
-  }
+  },
 
+  loadLightbox: ele => {
+    const service = GLOBAL_CONFIG.lightbox
+
+    if (service === 'mediumZoom') {
+      mediumZoom(ele, { background: 'var(--zoom-bg)' })
+    }
+
+    if (service === 'fancybox') {
+      Array.from(ele).forEach(i => {
+        if (i.parentNode.tagName !== 'A') {
+          const dataSrc = i.dataset.lazySrc || i.src
+          const dataCaption = i.title || i.alt || ''
+          btf.wrap(i, 'a', { href: dataSrc, 'data-fancybox': 'gallery', 'data-caption': dataCaption, 'data-thumb': dataSrc })
+        }
+      })
+
+      if (!window.fancyboxRun) {
+        Fancybox.bind('[data-fancybox]', {
+          Hash: false,
+          Thumbs: {
+            showOnStart: false
+          },
+          Images: {
+            Panzoom: {
+              maxScale: 4
+            }
+          },
+          Carousel: {
+            transition: 'slide'
+          },
+          Toolbar: {
+            display: {
+              left: ['infobar'],
+              middle: [
+                'zoomIn',
+                'zoomOut',
+                'toggle1to1',
+                'rotateCCW',
+                'rotateCW',
+                'flipX',
+                'flipY'
+              ],
+              right: ['slideshow', 'thumbs', 'close']
+            }
+          }
+        })
+        window.fancyboxRun = true
+      }
+    }
+  },
+
+  setLoading: {
+    add: ele => {
+      const html = `
+        <div class="loading-container">
+          <div class="loading-item">
+            <div></div><div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      `
+      ele.insertAdjacentHTML('afterend', html)
+    },
+    remove: ele => {
+      ele.nextElementSibling.remove()
+    }
+  },
+
+  updateAnchor: (anchor) => {
+    if (anchor !== window.location.hash) {
+      if (!anchor) anchor = location.pathname
+      const title = GLOBAL_CONFIG_SITE.title
+      window.history.replaceState({
+        url: location.href,
+        title
+      }, title, anchor)
+    }
+  },
+
+  getScrollPercent: (currentTop, ele) => {
+    const docHeight = ele.clientHeight
+    const winHeight = document.documentElement.clientHeight
+    const headerHeight = ele.offsetTop
+    const contentMath = (docHeight > winHeight) ? (docHeight - winHeight) : (document.documentElement.scrollHeight - winHeight)
+    const scrollPercent = (currentTop - headerHeight) / (contentMath)
+    const scrollPercentRounded = Math.round(scrollPercent * 100)
+    const percentage = (scrollPercentRounded > 100) ? 100 : (scrollPercentRounded <= 0) ? 0 : scrollPercentRounded
+    return percentage
+  },
+
+  addGlobalFn: (key, fn, name = false, parent = window) => {
+    const globalFn = parent.globalFn || {}
+    const keyObj = globalFn[key] || {}
+
+    if (name && keyObj[name]) return
+
+    name = name || Object.keys(keyObj).length
+    keyObj[name] = fn
+    globalFn[key] = keyObj
+    parent.globalFn = globalFn
+  },
+
+  addEventListenerPjax: (ele, event, fn, option = false) => {
+    ele.addEventListener(event, fn, option)
+    btf.addGlobalFn('pjax', () => {
+      ele.removeEventListener(event, fn, option)
+    })
+  },
+
+  removeGlobalFnEvent: (key, parent = window) => {
+    const { globalFn = {} } = parent
+    const keyObj = globalFn[key] || {}
+    const keyArr = Object.keys(keyObj)
+    if (!keyArr.length) return
+    keyArr.forEach(i => {
+      keyObj[i]()
+    })
+    delete parent.globalFn[key]
+  }
 }

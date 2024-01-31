@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>记Hexo+Github搭建博客</title>
-      <link href="/2024/01/29/%E8%AE%B0Hexo-Github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-      <url>/2024/01/29/%E8%AE%B0Hexo-Github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+      <title>第一篇博客</title>
+      <link href="/2024/01/31/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2024/01/31/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
       
-        <content type="html"><![CDATA[<h1 id="记Hexo-Github搭建博客"><a href="#记Hexo-Github搭建博客" class="headerlink" title="记Hexo+Github搭建博客"></a>记Hexo+Github搭建博客</h1><p>尝试了下搭个博客，果然过程很繁琐，中途崩了几次，就去各种搜，各种方法挨着试，成功的时候很少，不知道为什么我每次搞个东西，环境总是要崩，别人就是一帆风顺，算了麻了已经。</p><p>搭这个博客就直接对大佬的文章库库CtrlCV就行了，下面是我搭建博客和优化博客参考的大佬文章，我这个博客是butterfly主题，hexo官网还有其他很多主题，挑个自己喜欢的就行</p><p><a href="https://blog.csdn.net/qq_58608526/article/details/124652412">Hexo+Github博客搭建教程</a></p><p><a href="https://www.guifei.site/2022/07/20/hexo%E5%8D%9A%E5%AE%A2%E5%AE%89%E8%A3%85Butterfly%E4%B8%BB%E9%A2%98/">hexo博客安装Butterfly主题</a></p><p><a href="https://qmike.top/posts/f42db57d">自定义看板娘</a></p><p><a href="https://blog.anheyu.com/tags/butterfly/">魔改butterfly主题</a>（这个博主很好）</p><p><a href="https://blog.anheyu.com/posts/98c4.html">butterfly文章顶部添加波浪效果</a>（这个目前我还没搞好）</p><p>博客还需要很多好看的图片，这里有三个挺好的网站<a href="https://wallhaven.cc/">Wallhaven</a>、<a href="https://www.wallpaperhub.app/">Wallpaper Hub</a>、<a href="https://unsplash.com/">Unsplash</a></p><p>没什么东西了就，以后随缘会发点文章，主要是记录自己的学习过程，网站seo优化和美化再说吧</p>]]></content>
+        <content type="html"><![CDATA[<p>这个博客是终于搭好了，本来是搭好了的，那个文章封面图总是报错，我也知道为啥，现在也没弄好，先不管了。本站是基于hexo+github搭建的，主题是butterfly。这个站比较简洁，没有做很多美化，因为主要用作学习交流，弄那么花也不方便看。<del>其实是怕报错和懒</del></p><p>建个博客很简单，对着大佬的文章库库ctrlcv就行了，以下是我在建站时参考的文章</p><p><a href="https://blog.csdn.net/qq_58608526/article/details/124652412">Hexo+Github博客搭建教程</a></p><p><a href="https://blog.csdn.net/mjh1667002013/article/details/129290903">【Hexo】Hexo搭建Butterfly主题并快速美化</a></p><p>这个博客以后可能会发一些我个人学习方面的东西，如果有疑问或者想和我交流的可以联系我，联系方式就在关于作者那</p>]]></content>
       
       
       
