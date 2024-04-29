@@ -1,0 +1,5 @@
+hexo new xxx  新建文章
+hexo g    生成静态文件
+hexo s    启动服务器，默认本地
+hexo d    部署网站
+hexo clean   清理缓存文件
