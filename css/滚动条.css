@@ -1,0 +1,17 @@
+/* 设置滚动条的透明度 */
+::-webkit-scrollbar {
+    width: 12px;  /* 滚动条的宽度 */
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);  /* 滚动条轨道的背景色和透明度 */
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.7);  /* 滚动条滑块的背景色和透明度 */
+    border-radius: 10px;  /* 滚动条滑块的圆角半径 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0);  /* 滚动条滑块在悬停时的背景色和透明度 */
+}
